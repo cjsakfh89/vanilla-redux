@@ -1,19 +1,18 @@
-import { createStore } from "redux";
+const form = document.querySelector("form");
+const input = document.querySelector("input");
+const ul = document.querySelector("ul");
 
-const add = document.getElementById("add");
-const minus = document.getElementById("minus");
-const number = document.querySelector("span");
-number.innerText = 0;
-
-const countModifier = (count = 0, action) => {
-  if (action.type === "ADD") count++;
-  if (action.type === "MINUS") count--;
-  return count;
+const createToDo = (toDo) => {
+  const li = document.createElement("li");
+  li.innerText = toDo;
+  ul.appendChild(li);
 };
 
-const countStore = createStore(countModifier);
-countStore.subscribe(() => {
-  number.innerText = countStore.getState();
-});
-add.addEventListener("click", () => countStore.dispatch({ type: "ADD" }));
-minus.addEventListener("click", () => countStore.dispatch({ type: "MINUS" }));
+const onSubmit = (e) => {
+  e.preventDefault();
+  const toDo = input.value;
+  input.value = "";
+  createToDo(toDo);
+};
+
+form.addEventListener("submit", onSubmit);
